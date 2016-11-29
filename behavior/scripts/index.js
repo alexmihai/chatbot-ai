@@ -41,6 +41,31 @@ exports.handle = function handle(client) {
     }
   })
 
+  const handleCucumber = client.createStep({
+    satisfied() {
+      return false
+    },
+
+    prompt() {
+      client.addResponse('cucumberResponseStatus')
+      client.done()
+    }
+  })
+
+
+  const handleGreeting = client.createStep({
+    satisfied() {
+      return false
+    },
+
+    prompt() {
+      client.addResponse('greeting')
+      client.done()
+    }
+  })
+
+
+
   const handleGoodbye = client.createStep({
     satisfied() {
       return false
@@ -55,11 +80,14 @@ exports.handle = function handle(client) {
   client.runFlow({
     classifications: {
       goodbye: 'goodbye',
-      greeting: 'greeting'
+      greeting: 'greeting',
+      cucumberResponseMedia: 'cucumber-response/media',
+      cucumberResponseStatus: 'cucumber-response/status'
     },
     streams: {
       goodbye: handleGoodbye,
       greeting: handleGreeting,
+      cucumber: handleCucumber,
       main: 'onboarding',
       onboarding: [sayHello],
       end: [untrained]
