@@ -64,8 +64,6 @@ exports.handle = function handle(client) {
     }
   })
 
-
-
   const handleGoodbye = client.createStep({
     satisfied() {
       return false
